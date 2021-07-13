@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import Dropdown from "./components/Dropdown";
+import BorderRow from "./components/BorderRow";
+import Button from "./components/Button";
 
-function App() {
+export default function App() {
+  const [totalRows, setTotalRows] = useState<number>(1);
+  const [currentDropdownList, setCurrentDropdownList] = useState<string[]>([]);
+
+  const renderRows = (rowAmount: number) => {
+    let row = Array(rowAmount).fill(rowAmount);
+    console.log(row);
+    return row.map((a) => {
+      return <BorderRow>{a}</BorderRow>;
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h2>Search for Sessions</h2>
+      <div>
+        <Button
+          onClick={() => setTotalRows(totalRows + 1)}
+          text='Add'
+          color={"blue"}
+        />
+        <Button
+          onClick={() => setTotalRows(totalRows - 1)}
+          text='Remove'
+          color={"blue"}
+          disabled={totalRows === 1}
+        />
+      </div>
+      {renderRows(totalRows)}
+    </>
   );
 }
-
-export default App;
