@@ -1,21 +1,16 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import "../sass/Dropdown.scss";
+import { DropdownOperator } from "./BorderRow";
 
-export interface DropdownSignature {
-  'Domain': string;
-  'Screen Height': number;
-}
 
 interface DropdownProps {
   size?: number;
   defaultText?: string;
-  selectOptions?: string[];
-  onSelect: (data: string) => void;
+  selectOptions: DropdownOperator[];
+  onSelect: (data: DropdownOperator) => void;
   dropdownType?: string | number;
 }
-
-const test = ['wat', 'wat2', 'wat3']
 
 //TODO: Event listener to close drowdown on click
 //of window
@@ -23,10 +18,10 @@ const test = ['wat', 'wat2', 'wat3']
 export default function Dropdown(props: DropdownProps) {
   const { size, defaultText, selectOptions, dropdownType, onSelect } = props;
   const [showDropdown, setShowDropdown] = useState<boolean>(false)
-  const [display, setDisplay] = useState<string>('Select...')
+  const [display, setDisplay] = useState<DropdownOperator>()
 
   useEffect(() => {
-    if (display !== 'Select...') {
+    if (display !== undefined) {
       onSelect(display)
       console.log(display)
     }
@@ -35,14 +30,14 @@ export default function Dropdown(props: DropdownProps) {
   return (
     <div className='dropdown'>
       <div className="dropdown-container">
-        <span>{display}</span>
+        <span>{display?.text}</span>
         <div className="dropdown-button" onClick={() => setShowDropdown(!showDropdown)}> V</div>
       </div>
       {showDropdown &&
         <div className='dropdown-items'>
-          {test.map((option: string) => {
+          {selectOptions.map((option: DropdownOperator) => {
             return (
-              <div key={option} onClick={(e: any) => setDisplay(e.target.textContent)}>{option}</div>
+              <div key={option.text} onClick={() => setDisplay(option)}>{option.text}</div>
             )
           }
           )}

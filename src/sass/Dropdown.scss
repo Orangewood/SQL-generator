@@ -6,8 +6,6 @@
   .dropdown-items {
       -webkit-box-align: center;
       align-items: center;
-      // display: none;
-      flex: 1 1 0%;
       flex-wrap: wrap;
       padding: 2px 8px;
       position: relative;
@@ -20,23 +18,20 @@
   // }
 
 .dropdown-container {
-  -webkit-box-align: center;
     align-items: center;
     background-color: rgb(255, 255, 255);
     border-color: rgb(204, 204, 204);
     border-radius: 4px;
     border-style: solid;
     border-width: 1px;
-    cursor: default;
     display: flex;
     flex-wrap: wrap;
-    -webkit-box-pack: justify;
     justify-content: space-between;
     min-height: 38px;
     position: relative;
     box-sizing: border-box;
     outline: 0px !important;
-    width: 200%;
+    width: 200px;
 }
 
 .dropdown-button {

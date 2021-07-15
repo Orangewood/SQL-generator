@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Dropdown, { DropdownSignature } from "./components/Dropdown";
+import Dropdown from "./components/Dropdown";
 import BorderRow from "./components/BorderRow";
 import Button from "./components/Button";
 import React from "react";
@@ -8,6 +8,11 @@ import SqlBox from "./components/SqlBox";
 export default function App() {
   const [totalRows, setTotalRows] = useState<number>(1);
   const [currentData, setCurrentData] = useState<string[]>([]);
+
+
+  useEffect(() => {
+    console.log(currentData)
+  }, [currentData])
 
 
   //Make list static for now, upon duplicate select
@@ -37,9 +42,6 @@ export default function App() {
           disabled={totalRows === 1}
         />
         {renderRows(totalRows)}
-        <div><Dropdown onSelect={(value: string) => setCurrentData([...currentData, value])} /></div>
-        <div><Dropdown onSelect={(value: string) => setCurrentData([...currentData, value])} /></div>
-
         {/* <SqlBox compiledData={currentData} /> */}
       </div>
     </>
