@@ -1,6 +1,7 @@
 .dropdown {
   position: relative;
   display: inline-block;
+  justify-content: space-evenly;
 }
 
 .dropdown-items {
@@ -10,13 +11,12 @@
   position: absolute;
   cursor: pointer;
   z-index: 1;
-  display: block;
   border-color: #c1c1c1;
   border-radius: 4px;
   border-style: solid;
   border-width: 1px;
-  min-width: 183px;
-  opacity: 1;
+  background-color: white;
+  width: 93%; 
 }
 
 .dropdown-container {
@@ -27,13 +27,20 @@
   border-width: 1px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   min-height: 25px;
-  min-width: 200px;
   cursor: pointer;
 }
 
 .dropdown-button {
-  align-items: center;
-  display: flex;
+  position: absolute;
+  right: 0;
+}
+
+.dropdown-row {
+  margin: 10px;
+  color: grey;
+}
+.dropdown-row:hover{
+  font-weight: 900;
+  color: black;
 }

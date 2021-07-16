@@ -52,14 +52,28 @@ export default function BorderRow(props: BorderRowProps) {
           selectOptions={predicateDropdown}
           onSelect={(value: DropdownOperator) => setRowType(value.type)}
         />
-        {rowType === "string"
-          ? (
-              <Dropdown
-                selectOptions={stringDropdown}
-                onSelect={(value: DropdownOperator) => setRowData(value.value)}
-              />
-            ) && <input className="row-input"></input>
-          : ""}
+        {rowType === "string" ? (
+          <>
+            <Dropdown
+              selectOptions={stringDropdown}
+              size={"33%"}
+              onSelect={(value: DropdownOperator) => setRowData(value.value)}
+            />
+            <input className="row-input"></input>
+          </>
+        ) : (
+          <>
+            <text>is</text>
+            <Dropdown
+              selectOptions={numberDropdown}
+              size={'20%'}
+              onSelect={(value: DropdownOperator) => setRowData(value.value)}
+            />
+            <input className="row-input"></input>
+            <text>and</text>
+            <input className="row-input"></input>
+          </>
+        )}
       </div>
     </>
   );

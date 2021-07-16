@@ -4,30 +4,27 @@ import "../sass/Dropdown.scss";
 import { DropdownOperator } from "./BorderRow";
 
 interface DropdownProps {
-  size?: number;
-  defaultText?: string;
+  size?: string;
   selectOptions: DropdownOperator[];
   onSelect: (data: DropdownOperator) => void;
-  dropdownType?: string | number;
 }
 
 //TODO: Event listener to close drowdown on click
 //of window
 
 export default function Dropdown(props: DropdownProps) {
-  const { size, defaultText, selectOptions, dropdownType, onSelect } = props;
+  const { size, selectOptions, onSelect } = props;
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [display, setDisplay] = useState<DropdownOperator>();
 
   useEffect(() => {
     if (display !== undefined) {
       onSelect(display);
-      console.log(display);
     }
   }, [display]);
 
   return (
-    <div className="dropdown">
+    <div className="dropdown" style={{ width: size ? size : '33%'}}>
       <div
         className="dropdown-container"
         onClick={() => setShowDropdown(!showDropdown)}
@@ -39,7 +36,7 @@ export default function Dropdown(props: DropdownProps) {
         <div className="dropdown-items">
           {selectOptions.map((option: DropdownOperator) => {
             return (
-              <div key={option.text} onClick={() => setDisplay(option)}>
+              <div className="dropdown-row" key={option.text} onClick={() => setDisplay(option)}>
                 {option.text}
               </div>
             );
