@@ -1,56 +1,84 @@
-import { useEffect, useState } from "react";
+import { Children, useEffect, useState } from "react";
 import Dropdown from "./components/Dropdown";
 import BorderRow from "./components/BorderRow";
 import Button from "./components/Button";
-import React from "react";
 import SqlBox from "./components/SqlBox";
-import './sass/App.scss'
+import "./sass/App.scss";
+
+//TODO: Memoize rows to retain values, instead of rerender on delete
 
 export default function App() {
-  const [totalRows, setTotalRows] = useState<number>(1);
-  const [currentData, setCurrentData] = useState<string[]>([]);
+  const [rowList, setRowList] = useState<number[]>([0]);
+  const [currentData, setCurrentData] = useState<(Array<string | number>)[]>([]);
+
+  const addRow = () => {
+    let end = rowList.slice(-1)[0] + 1;
+    setRowList([...rowList, end]);
+  };
+
+  const deleteRow = (index: number) => {
+    let filteredList = rowList.filter((a) => a !== index);
+    setRowList(filteredList);
+  };
+
+  const resetRow = () => {
+    let filteredList = rowList.filter((a) => a === rowList[0]);
+    setRowList(filteredList);
+    setCurrentData([]);
+  };
 
   useEffect(() => {
-    console.log(currentData);
-  }, [currentData]);
-
-  //Make list static for now, upon duplicate select
-  //render error or disalbe.
-
-  const renderRows = (rowAmount: number) => {
-    let row = Array(rowAmount).fill(rowAmount);
-    return row.map((a) => {
-      return (
-        <BorderRow
-          onSelectedData={(data: string[]) =>
-            setCurrentData(currentData.concat(data))
-          }
-        >
-          {a}
-        </BorderRow>
-      );
-    });
-  };
+    console.log(currentData)
+  }, [currentData])
 
   return (
     <>
       <div className="app-container">
-        <h2>Search for Sessions</h2>
-        {renderRows(totalRows)}
-        {/* <SqlBox compiledData={currentData} /> */}
+        <h3>Search for Sessions</h3>
+        {rowList.map((a) => {
+          return (
+            <>
+              <div className="row-container">
+                <Button
+                  onClick={() => deleteRow(a)}
+                  text="X"
+                  type="button-delete"
+                  disabled={a === 0}
+                />
+                <BorderRow
+                  key={a}
+                  onSelectedData={(data: any) =>
+                    setCurrentData(currentData)
+                  }
+                  index={a}
+                >
+                  {Children}
+                </BorderRow>
+              </div>
+            </>
+          );
+        })}
         <Button
-        onClick={() => setTotalRows(totalRows + 1)}
-        text="Add"
-        color={"blue"}
-      />
-      <Button
-        onClick={() => setTotalRows(totalRows - 1)}
-        text="Remove"
-        color={"blue"}
-        disabled={totalRows === 1}
-      />
-
+          onClick={() => addRow()}
+          text="And"
+          type="button-add"
+          disabled={rowList.length > 8}
+        />
+        {/* <Button
+          onClick={() => console.log(rowList)}
+          text="Search"
+          type="button-search"
+          disabled={rowList.length < 2}
+          image={search}
+        /> */}
+        <Button
+          onClick={() => resetRow()}
+          text="Reset"
+          type="button-reset"
+          disabled={rowList.length < 2}
+        />
       </div>
+      <SqlBox compiledData={currentData} />
     </>
   );
 }

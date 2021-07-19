@@ -1,7 +1,7 @@
 import React from "react";
 
 interface SqlBoxProps {
-  compiledData: string[];
+  compiledData: (Array<string | number>)[];
 }
 
 export default function SqlBox(props: SqlBoxProps) {

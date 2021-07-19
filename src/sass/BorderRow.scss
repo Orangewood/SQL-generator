@@ -1,20 +1,26 @@
-.row-container {
-  border-radius: 4px;
-  border-style: solid;
-  border-width: 0.5px;
-  border-color: #c1c1c1;
-  border-style: solid;
-  padding: 10px 5px;
-  display: flex;
-  flex-direction: row;  
-  justify-content: space-evenly;
-}
 
-.row-input {
+
+.row-input, .row-input-string{
   align-items: center;
   border-color: #c1c1c1;
   border-radius: 4px;
   border-style: solid;
   border-width: 1px;
-  min-width: 200px;
+  width: 15%;
+  & .-string{
+    width: 30%
+  }
+}
+
+.row-text-field{
+  border-color: #c1c1c1;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  background-color: #ebecf0;
+  min-width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 25px;
 }

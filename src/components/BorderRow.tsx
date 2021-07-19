@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { ReactNode } from "react";
 import "../sass/BorderRow.scss";
 import Dropdown from "./Dropdown";
 
 interface BorderRowProps {
   children: ReactNode;
-  onSelectedData: (data: string[]) => void;
+  onSelectedData: (data: Array<string | number>) => void;
+  index: number;
 }
 
 export interface DropdownOperator {
@@ -42,39 +43,58 @@ const predicateDropdown: DropdownOperator[] = [
 ];
 
 export default function BorderRow(props: BorderRowProps) {
+  const { onSelectedData } = props;
   const [rowType, setRowType] = useState<string>();
-  const [rowData, setRowData] = useState<string | number[]>([]);
+  const [rowData, setRowData] = useState<(string | number)[]>([]);
+
+  useEffect(() => {
+    onSelectedData(rowData);
+    console.log(rowData)
+  }, [rowData]);
 
   return (
     <>
-      <div className="row-container">
-        <Dropdown
-          selectOptions={predicateDropdown}
-          onSelect={(value: DropdownOperator) => setRowType(value.type)}
-        />
-        {rowType === "string" ? (
-          <>
-            <Dropdown
-              selectOptions={stringDropdown}
-              size={"33%"}
-              onSelect={(value: DropdownOperator) => setRowData(value.value)}
-            />
-            <input className="row-input"></input>
-          </>
-        ) : (
-          <>
-            <text>is</text>
-            <Dropdown
-              selectOptions={numberDropdown}
-              size={'20%'}
-              onSelect={(value: DropdownOperator) => setRowData(value.value)}
-            />
-            <input className="row-input"></input>
-            <text>and</text>
-            <input className="row-input"></input>
-          </>
-        )}
-      </div>
+      <Dropdown
+        selectOptions={predicateDropdown}
+        onSelect={(value: DropdownOperator) => {
+          setRowType(value.type);
+          setRowData([]);
+          setRowData([...rowData, value.value])
+        }}
+        size={rowType === "string" ? "30%" : "20%"}
+      />
+      {rowType === "string" ? (
+        <>
+          <Dropdown
+            selectOptions={stringDropdown}
+            size={"30%"}
+            onSelect={(value: DropdownOperator) => {
+              setRowData([...rowData,value.value])
+            }}
+          />
+          <input className="row-input-string"></input>
+        </>
+      ) : (
+        <>
+          <div className="row-text-field">is</div>
+          <Dropdown
+            selectOptions={numberDropdown}
+            size={"20%"}
+            onSelect={(value: DropdownOperator) => {
+              setRowData([...rowData,value.value])
+            }}
+          />
+          <input
+            className="row-input"
+            // onChange={(e: any) => setRowData([...rowData, e.target.value])}
+          ></input>
+          <div className="row-text-field">and</div>
+          <input
+            className="row-input"
+            // onChange={(e: any) => setRowData([...rowData, e.target.value])}
+          ></input>
+        </>
+      )}
     </>
   );
 }

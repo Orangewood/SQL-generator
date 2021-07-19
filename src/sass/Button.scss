@@ -1,0 +1,24 @@
+.button {
+  color: white;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+
+  &-search {
+    width: 20%;
+    /* padding: 11px; */
+    background: #2196f3;
+  }
+
+  &-add {
+    background: #2196f3;
+  }
+
+  &-reset {
+    border: #2196f3;
+  }
+  &-delete {
+    border: none;
+    background: none;
+  }
+}

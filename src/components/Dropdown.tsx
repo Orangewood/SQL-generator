@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import "../sass/Dropdown.scss";
 import { DropdownOperator } from "./BorderRow";
@@ -24,7 +24,7 @@ export default function Dropdown(props: DropdownProps) {
   }, [display]);
 
   return (
-    <div className="dropdown" style={{ width: size ? size : '33%'}}>
+    <div className="dropdown" style={{ width: size ? size : "30%" }}>
       <div
         className="dropdown-container"
         onClick={() => setShowDropdown(!showDropdown)}
@@ -36,7 +36,14 @@ export default function Dropdown(props: DropdownProps) {
         <div className="dropdown-items">
           {selectOptions.map((option: DropdownOperator) => {
             return (
-              <div className="dropdown-row" key={option.text} onClick={() => setDisplay(option)}>
+              <div
+                className="dropdown-row"
+                key={option.text}
+                onClick={() => {
+                  setDisplay(option);
+                  setShowDropdown(!showDropdown);
+                }}
+              >
                 {option.text}
               </div>
             );
