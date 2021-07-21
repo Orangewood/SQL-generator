@@ -30,12 +30,16 @@
   flex-wrap: wrap;
   min-height: 25px;
   cursor: pointer;
+  overflow: none;
 }
 
 .dropdown-button {
-  position: absolute;
-  right: 0;
   padding-right: 5px;
+  width: 15px;
+  margin-left: auto;
+  .img{
+    color: grey;
+  }
 }
 
 .dropdown-row {
