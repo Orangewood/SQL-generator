@@ -100,14 +100,20 @@ export default function BorderRow(props: BorderRowProps) {
           />
           <input
             className="row-input"
-            onChange={(e: any) => setStartRange(e.target.value)}
+            onChange={(e: any) => {
+              let input = e.target.value;
+              setStartRange(input.replace(/[^0-9]/gi, ""));
+            }}
             value={startRange ?? ""}
             placeholder={"0"}
           ></input>
           <div className="row-text-field">and</div>
           <input
             className="row-input"
-            onChange={(e: any) => setEndRange(e.target.value)}
+            onChange={(e: any) => {
+              let input = e.target.value;
+              setEndRange(input.replace(/[^0-9]/gi, ""));
+            }}
             value={endRange ?? ""}
             placeholder={"0"}
           ></input>
@@ -124,8 +130,18 @@ export default function BorderRow(props: BorderRowProps) {
           />
           <input
             className="row-input-string"
-            onChange={(e: any) => setStringInput(e.target.value)}
-            value={stringInput}
+            onChange={(e: any) => {
+              if (
+                rowType?.text === "First Name" ||
+                rowType?.text === "Last Name"
+              ) {
+                let input = e.target.value;
+                setStringInput(input.replace(/[^A-Za-z]/gi, ""));
+                return;
+              }
+              setStringInput(e.target.value);
+            }}
+            value={stringInput ?? ""}
             placeholder={placeHolderText(rowType)}
           ></input>
         </>

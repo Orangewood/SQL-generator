@@ -7,17 +7,21 @@ interface SqlBoxProps {
 
 export default function SqlBox(props: SqlBoxProps) {
   const { compiledData } = props;
-  const [numberError, setNumerError] = useState<boolean>(false)
-  const [string, setStringError] = useState<boolean>(false)
+  const [error, setError] = useState<boolean>(false)
 
 
   useEffect(() => {
-    console.log(compiledData);
+    setError(false)
+    // if( compiledData.filter((a) => a?.column).length >= 2 ){
+    //   setError(true)
+    //   return
+    // }
   }, [compiledData]);
 
   return (
     <div>
-      {compiledData?.map((a) => {
+      {error && <div>Error</div>}
+      {!error && compiledData?.map((a) => {
         if (a?.stringInput) {
           return (
             <div>{`Select ${a.column} from session ${a.operator} ${a.stringInput}`}</div>

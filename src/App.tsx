@@ -11,6 +11,7 @@ import { RowDataType } from "./services/AppTypes";
 
 export default function App() {
   const [rowList, setRowList] = useState<number[]>([0]);
+  const [rawData, setRawData] = useState<Array<RowDataType | undefined>>([]);
   const [allRowData, setAllRowData] = useState<Array<RowDataType | undefined>>(
     []
   );
@@ -26,21 +27,26 @@ export default function App() {
   };
 
   const resetRow = () => {
-    // let filteredList = rowList.filter((a) => a === rowList[0]);
-    setRowList([0]);
+    setRowList([]);
     setAllRowData([]);
   };
+
+  useEffect(() => {
+    if (rowList.length === 0) setRowList([0]);
+  }, [rowList]);
 
   const searchRows = (data: Array<RowDataType | undefined>) => {
     if (!data) return;
 
-    // let testColumn = new Set (data.filter((a) => a?.column))
-    
-    let testColumn = data.filter((a,b) =>a?.column)
-    console.log(new Set(testColumn))
-
     let sqlResults = Array.from(
-      new Set(data.filter((a) => a?.column && a.operator))
+      new Set(
+        data.filter(
+          (a) =>
+            a?.column &&
+            a.operator &&
+            (a.stringInput || (a.startRange && a.endRange))
+        )
+      )
     );
     setAllRowData(sqlResults);
   };
@@ -62,7 +68,7 @@ export default function App() {
                 <BorderRow
                   key={a}
                   onSelectedData={(data: RowDataType | undefined) => {
-                    setAllRowData([...allRowData, data]);
+                    setRawData([...allRowData, data]);
                   }}
                 >
                   {Children}
@@ -78,10 +84,10 @@ export default function App() {
           disabled={rowList.length > 8}
         />
         <Button
-          onClick={() => searchRows(allRowData)}
+          onClick={() => searchRows(rawData)}
           text="Search"
           type="button-search"
-          disabled={rowList.length < 2}
+          disabled={rowList.length < 1}
           image={search}
         />
         <Button
