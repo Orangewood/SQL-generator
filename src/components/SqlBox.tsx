@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { DropdownOperator, RowDataType } from "../services/AppTypes";
 
 interface SqlBoxProps {
-  compiledData: Array<RowDataType | undefined>;
+  compiledData: (RowDataType | undefined)[];
 }
 
 export default function SqlBox(props: SqlBoxProps) {
@@ -16,6 +16,7 @@ export default function SqlBox(props: SqlBoxProps) {
     //   setError(true)
     //   return
     // }
+    console.log(compiledData)
   }, [compiledData]);
 
   return (

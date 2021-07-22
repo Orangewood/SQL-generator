@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { ReactNode } from "react";
+import {useEffect, useState } from "react";
 import "../sass/BorderRow.scss";
 import {
   DropdownOperator,
@@ -11,12 +10,12 @@ import {
 import Dropdown from "./Dropdown";
 
 interface BorderRowProps {
-  children: ReactNode;
-  onSelectedData: (data: RowDataType | undefined) => void;
+  onSelectedData: (data: RowDataType | undefined, id: string) => void;
+  id: string;
 }
 
 export default function BorderRow(props: BorderRowProps) {
-  const { onSelectedData } = props;
+  const { onSelectedData, id } = props;
   const [rowType, setRowType] = useState<DropdownOperator>();
   const [column, setColumn] = useState<string>();
   const [operator, setOperator] = useState<string>();
@@ -44,6 +43,7 @@ export default function BorderRow(props: BorderRowProps) {
       setEndRange(undefined);
     }
     setChangeType(false);
+
   }, [
     column,
     operator,
@@ -55,7 +55,7 @@ export default function BorderRow(props: BorderRowProps) {
   ]);
 
   useEffect(() => {
-    onSelectedData(constructedData);
+    onSelectedData(constructedData, id);
   }, [constructedData]);
 
   const placeHolderText = (row: DropdownOperator | undefined) => {
