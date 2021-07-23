@@ -1,16 +1,22 @@
 .app-container {
-max-width: 700px;
-margin: 50px auto 0 auto;
-}
-
-.row-container {
-    border-radius: 4px;
-    border-style: solid;
-    border-width: 0.5px;
-    border-color: #c1c1c1;
-    border-style: solid;
-    padding: 20px 10px;
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 20px;
+  max-width: 700px;
+  margin: 50px auto 0 auto;
+  > hr {
+    margin-top: 10%;
   }
+}
+.row-button {
+  display: flex;
+  align-items: center;
+}
+.row-container {
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 0.5px;
+  border-color: #c1c1c1;
+  border-style: solid;
+  padding: 20px 10px;
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}

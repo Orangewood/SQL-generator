@@ -11,7 +11,7 @@ export interface RowSignature {
 
 export interface RowDictionary {
   key: string;
-  data: RowDataType;
+  data: RowDataType | undefined;
 }
 
 export interface RowDataType {
@@ -23,17 +23,17 @@ export interface RowDataType {
 }
 
 export const stringDropdown: DropdownOperator[] = [
-  { value: "equals", text: "Equals" },
+  { value: "=", text: "Equals" },
   { value: "contains", text: "Contains" },
   { value: "starts with", text: "Starts with" },
   { value: "in list", text: "In list" },
 ];
 
 export const numberDropdown: DropdownOperator[] = [
-  { value: "equals", text: "Equals" },
+  { value: "=", text: "Equals" },
   { value: "between", text: "Between" },
-  { value: "greater than", text: "Greater than" },
-  { value: "less than", text: "Less than" },
+  { value: ">", text: "Greater than" },
+  { value: "<", text: "Less than" },
   { value: "in list", text: "In list" },
 ];
 

@@ -9,14 +9,13 @@ interface DropdownProps {
   size?: string;
   selectOptions: DropdownOperator[] | undefined;
   onSelect: (data: DropdownOperator) => void;
-  reset?: boolean;
 }
 
 //TODO: Event listener to close drowdown on click
 //of window
 
 export default function Dropdown(props: DropdownProps) {
-  const { size, selectOptions, onSelect, reset } = props;
+  const { size, selectOptions, onSelect } = props;
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [display, setDisplay] = useState<DropdownOperator>();
 
@@ -24,6 +23,7 @@ export default function Dropdown(props: DropdownProps) {
     if (display !== undefined) {
       onSelect(display);
     }
+    // eslint-disable-next-line
   }, [display]);
 
   return (
@@ -35,7 +35,11 @@ export default function Dropdown(props: DropdownProps) {
         >
           <span style={{ marginLeft: "5px" }}>{display?.text}</span>
           <div className="dropdown-button">
-            {showDropdown ? <img src={ChevronDown} /> : <img src={ChevronUp} />}
+            {!showDropdown ? (
+              <img src={ChevronDown} alt=""/>
+            ) : (
+              <img src={ChevronUp} alt=""/>
+            )}
           </div>
         </div>
         {showDropdown && (

@@ -1,0 +1,12 @@
+.sql-box{
+    max-width: 700px;
+    margin: 50px auto 0 auto;
+    border-radius: 5px;
+    border: 1px solid;
+    min-height: 100px;
+    display: block;
+    > div {
+        display: flex;
+        justify-content: center;
+    }
+}

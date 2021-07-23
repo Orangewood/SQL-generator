@@ -14,7 +14,7 @@ export default function Button(props: ButtonProps) {
   return (
     <button className={type} disabled={disabled} onClick={onClick}>
       <>
-        {image && <img src={image} />}
+        {image && <img className="button-image" src={image} alt="" />}
         {text}
       </>
     </button>

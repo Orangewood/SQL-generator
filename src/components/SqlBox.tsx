@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { DropdownOperator, RowDataType } from "../services/AppTypes";
+import { RowDataType } from "../services/AppTypes";
+import "../sass/SqlBox.scss";
 
 interface SqlBoxProps {
   compiledData: (RowDataType | undefined)[];
@@ -7,33 +8,46 @@ interface SqlBoxProps {
 
 export default function SqlBox(props: SqlBoxProps) {
   const { compiledData } = props;
-  const [error, setError] = useState<boolean>(false)
+  const [error, setError] = useState<boolean>(false);
 
+  // const sqlGenerator = (data:(RowDataType | undefined)[]) => {
+  //   data.map((a) => {
+  //     switch a?.operator:
+  //     case 
+  //   })
+  // }
 
   useEffect(() => {
-    setError(false)
-    // if( compiledData.filter((a) => a?.column).length >= 2 ){
-    //   setError(true)
-    //   return
-    // }
+    setError(
+      compiledData.some(
+        (a) => !a?.stringInput && (!a?.startRange || !a?.endRange)
+      )
+    );
     console.log(compiledData)
   }, [compiledData]);
 
   return (
-    <div>
-      {error && <div>Error</div>}
-      {!error && compiledData?.map((a) => {
-        if (a?.stringInput) {
-          return (
-            <div>{`Select ${a.column} from session ${a.operator} ${a.stringInput}`}</div>
-          );
-        }
-        if (a?.startRange && a?.endRange) {
-          return (
-            <div>{`Select ${a?.column} from session ${a?.startRange} ${a.operator} ${a.endRange}`}</div>
-          );
-        }
-      })}
+    <div className="sql-box">
+      {error && <div>Invalid query detected</div>}
+      {!error &&
+        compiledData?.map((a) => {
+          if (a?.stringInput) {
+            return (
+              <div
+                key={Date.now() + "string-sql"}
+              >{`SELECT ${a.column} FROM session ${a.operator} ${a.stringInput}`}</div>
+            );
+          }
+          if (a?.startRange && a?.endRange) {
+            return (
+              <div
+                key={Date.now() + "number-sql"}
+              >{`SELECT ${a?.column} FROM session WHERE ${a?.startRange} ${a.operator} ${a.endRange}`}</div>
+            );
+          }
+          return <div></div>
+        })}
+        
     </div>
   );
 }

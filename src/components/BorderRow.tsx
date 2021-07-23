@@ -10,12 +10,12 @@ import {
 import Dropdown from "./Dropdown";
 
 interface BorderRowProps {
-  onSelectedData: (data: RowDataType | undefined, id: string) => void;
-  id: string;
+  onSelectedData: (data: RowDataType | undefined) => void;
+  // id: string;
 }
 
 export default function BorderRow(props: BorderRowProps) {
-  const { onSelectedData, id } = props;
+  const { onSelectedData,  } = props;
   const [rowType, setRowType] = useState<DropdownOperator>();
   const [column, setColumn] = useState<string>();
   const [operator, setOperator] = useState<string>();
@@ -55,7 +55,8 @@ export default function BorderRow(props: BorderRowProps) {
   ]);
 
   useEffect(() => {
-    onSelectedData(constructedData, id);
+    onSelectedData(constructedData);
+    // eslint-disable-next-line
   }, [constructedData]);
 
   const placeHolderText = (row: DropdownOperator | undefined) => {
@@ -82,7 +83,7 @@ export default function BorderRow(props: BorderRowProps) {
           setRowType(selectedOption);
           setColumn(selectedOption.value);
           setChangeType(rowType?.text !== selectedOption.text);
-          setSameType(rowType?.type == selectedOption.type);
+          setSameType(rowType?.type === selectedOption.type);
         }}
         size={rowType?.type === "string" || !rowType ? "30%" : "20%"}
       />
@@ -96,7 +97,6 @@ export default function BorderRow(props: BorderRowProps) {
             onSelect={(value: DropdownOperator) => {
               setOperator(value.value);
             }}
-            reset={changeType}
           />
           <input
             className="row-input"
@@ -126,7 +126,6 @@ export default function BorderRow(props: BorderRowProps) {
             onSelect={(value: DropdownOperator) => {
               setOperator(value.value);
             }}
-            reset={changeType}
           />
           <input
             className="row-input-string"
