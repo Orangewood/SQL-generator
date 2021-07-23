@@ -28,15 +28,15 @@ export const stringDropdown: DropdownOperator[] = [
   { value: "=", text: "Equals" },
   { value: "contains", text: "Contains" },
   { value: "starts with", text: "Starts with" },
-  { value: "in list", text: "In list" },
+  { value: "IN", text: "In list" },
 ];
 
 export const numberDropdown: DropdownOperator[] = [
   { value: "=", text: "Equals" },
-  { value: "between", text: "Between" },
+  { value: "BETWEEN", text: "Between" },
   { value: ">", text: "Greater than" },
   { value: "<", text: "Less than" },
-  { value: "in list", text: "In list" },
+  { value: "IN", text: "In list" },
 ];
 
 export const predicateDropdown: DropdownOperator[] = [
