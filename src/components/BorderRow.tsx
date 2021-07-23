@@ -1,4 +1,4 @@
-import {useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../sass/BorderRow.scss";
 import {
   DropdownOperator,
@@ -10,21 +10,24 @@ import {
 import Dropdown from "./Dropdown";
 
 interface BorderRowProps {
-  onSelectedData: (data: RowDataType | undefined) => void;
-  // id: string;
+  onSelectedData: (data: RowDataType) => void;
 }
 
 export default function BorderRow(props: BorderRowProps) {
-  const { onSelectedData,  } = props;
+  const { onSelectedData } = props;
   const [rowType, setRowType] = useState<DropdownOperator>();
-  const [column, setColumn] = useState<string>();
-  const [operator, setOperator] = useState<string>();
-  const [stringInput, setStringInput] = useState<string>();
-  const [startRange, setStartRange] = useState<string>();
-  const [endRange, setEndRange] = useState<string>();
-  const [constructedData, setConstructedData] = useState<
-    RowDataType | undefined
-  >();
+  const [column, setColumn] = useState<string | undefined>();
+  const [operator, setOperator] = useState<string | undefined>();
+  const [stringInput, setStringInput] = useState<string | undefined>();
+  const [startRange, setStartRange] = useState<string | undefined>();
+  const [endRange, setEndRange] = useState<string | undefined>();
+  const [constructedData, setConstructedData] = useState<RowDataType>({
+    column: column,
+    operator: operator,
+    stringInput: stringInput,
+    startRange: startRange,
+    endRange: endRange,
+  });
   const [changeType, setChangeType] = useState<boolean>(false);
   const [sameType, setSameType] = useState<boolean>(false);
 
@@ -43,7 +46,6 @@ export default function BorderRow(props: BorderRowProps) {
       setEndRange(undefined);
     }
     setChangeType(false);
-
   }, [
     column,
     operator,

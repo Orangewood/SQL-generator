@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { RowDataType, RowDictionary } from "../services/AppTypes";
 import BorderRow from "./BorderRow";
 import Button from "./Button";
 import "../sass/Body.scss";
 import { useEffect } from "react";
 import SearchIcon from "../images/search.svg";
-
-//TODO: Memoize rows to prevent rerender
 
 interface BodyProps {
   onDataInput: (data: (RowDictionary | undefined)[]) => void;
@@ -15,28 +13,33 @@ interface BodyProps {
 
 export default function Body(props: BodyProps) {
   const { onDataInput, showSql } = props;
-  const row = (
-    <BorderRow
-      key={Date.now() + "row"}
-      onSelectedData={(data: RowDataType | undefined) => {
-        setRawData([...rawData, { key: Date.now() + "row", data: data } as RowDictionary]);
-        showSql(false);
-      }}
-    />
-  );
 
-  const [rowList, setRowList] = useState<JSX.Element[]>([row]);
-  const [rawData, setRawData] = useState<(RowDictionary | undefined)[]>([]);
+  const initialData = {
+    key: Date.now() + "row",
+    data: {
+      column: undefined,
+      operator: undefined,
+      stringInput: undefined,
+      startRange: undefined,
+      endRange: undefined,
+    },
+  };
+
+  const [rawData, setRawData] = useState<(RowDictionary | undefined)[]>([
+    initialData,
+  ]);
+  const [_, setSavedData] = useState<(RowDictionary | undefined)[]>([
+    initialData,
+  ]);
 
   const addRow = () => {
-    let addedRow = [...rowList, row];
-    setRowList(addedRow);
+    let addedData = [...rawData, initialData];
+    setRawData(addedData);
     showSql(false);
   };
 
-  const deleteRow = (index: React.Key | null) => {
+  const deleteRow = (index: any) => {
     if (!index) return;
-    setRowList((rowList) => rowList.filter((a) => a.key !== index));
     setRawData((dictionaryList) =>
       dictionaryList.filter((a) => a?.key !== index)
     );
@@ -44,15 +47,13 @@ export default function Body(props: BodyProps) {
   };
 
   const resetData = () => {
-    setRowList([row]);
     rawData.length = 0;
-    setRawData([]);
+    setRawData([initialData]);
     showSql(false);
   };
 
   useEffect(() => {
     onDataInput(rawData);
-    console.log(rawData);
     // eslint-disable-next-line
   }, [rawData]);
 
@@ -60,33 +61,25 @@ export default function Body(props: BodyProps) {
     <>
       <div className="app-container">
         <h3>Search for Sessions</h3>
-        {rowList.map((a) => {
+        {rawData.map((a, index) => {
           return (
-            <div className="row-container" key={a.key}>
+            <div className="row-container" key={a?.key}>
               <Button
                 onClick={() => {
-                  if (rowList.length === 1) {
+                  if (rawData.length === 1) {
                     resetData();
                     return;
                   }
-                  deleteRow(a.key);
+                  deleteRow(a!.key);
                 }}
                 text="X" //could use .svg
                 type="button-delete"
               />
               <BorderRow
-                key={a.key}
+                key={a!.key}
                 onSelectedData={(data: RowDataType | undefined) => {
-                  let wat =  rawData.findIndex((b) => a.key === b?.key)
-                  rawData.map((b) => {
-                    if(a.key === b?.key) {
-                      console.log(rawData[wat])
-                    }
-                  })
-                  setRawData([
-                    ...rawData,
-                    { key: a.key, data: data } as RowDictionary,
-                  ]);
+                  let currentRow = { key: a!.key, data: data };
+                  setSavedData([...rawData.splice(index, 1, currentRow)]);
                   showSql(false);
                 }}
               />
@@ -97,7 +90,7 @@ export default function Body(props: BodyProps) {
           onClick={() => addRow()}
           text="And"
           type="button-add"
-          disabled={rowList.length > 8}
+          disabled={rawData.length > 8}
         />
         <hr className="solid" />
         <div className="row-button">
@@ -105,14 +98,14 @@ export default function Body(props: BodyProps) {
             onClick={() => showSql(true)}
             text="Search"
             type="button-search"
-            disabled={rowList.length < 1}
+            disabled={rawData.length < 1}
             image={SearchIcon}
           />
           <Button
             onClick={() => resetData()}
             text="Reset"
             type="button-reset"
-            disabled={rowList.length < 1}
+            disabled={rawData.length < 1}
           />
         </div>
       </div>

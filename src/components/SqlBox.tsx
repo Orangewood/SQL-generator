@@ -23,25 +23,24 @@ export default function SqlBox(props: SqlBoxProps) {
         (a) => !a?.stringInput && (!a?.startRange || !a?.endRange)
       )
     );
-    console.log(compiledData)
   }, [compiledData]);
 
   return (
     <div className="sql-box">
       {error && <div>Invalid query detected</div>}
       {!error &&
-        compiledData?.map((a) => {
+        compiledData?.map((a, index) => {
           if (a?.stringInput) {
             return (
               <div
-                key={Date.now() + "string-sql"}
+                key={index}
               >{`SELECT ${a.column} FROM session ${a.operator} ${a.stringInput}`}</div>
             );
           }
           if (a?.startRange && a?.endRange) {
             return (
               <div
-                key={Date.now() + "number-sql"}
+                key={index}
               >{`SELECT ${a?.column} FROM session WHERE ${a?.startRange} ${a.operator} ${a.endRange}`}</div>
             );
           }

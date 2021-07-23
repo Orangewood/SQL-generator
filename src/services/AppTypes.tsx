@@ -1,3 +1,5 @@
+import { Key } from "react";
+
 export interface DropdownOperator {
   value: string;
   text: string;
@@ -10,7 +12,7 @@ export interface RowSignature {
 }
 
 export interface RowDictionary {
-  key: string;
+  key: string | Key;
   data: RowDataType | undefined;
 }
 
