@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Body from "./components/Body";
 import SqlBox from "./components/SqlBox";
 import { RowDictionary } from "./services/AppTypes";
