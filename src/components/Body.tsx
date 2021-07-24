@@ -28,9 +28,6 @@ export default function Body(props: BodyProps) {
   const [rawData, setRawData] = useState<(RowDictionary | undefined)[]>([
     initialData,
   ]);
-  const [_, setSavedData] = useState<(RowDictionary | undefined)[]>([
-    initialData,
-  ]);
 
   const addRow = () => {
     let addedData = [...rawData, initialData];
@@ -79,7 +76,7 @@ export default function Body(props: BodyProps) {
                 key={a!.key}
                 onSelectedData={(data: RowDataType | undefined) => {
                   let currentRow = { key: a!.key, data: data };
-                  setSavedData([...rawData.splice(index, 1, currentRow)]);
+                  rawData.splice(index, 1, currentRow);
                   showSql(false);
                 }}
               />
